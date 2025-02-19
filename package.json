@@ -9,6 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/joi": "^17.2.2",
+    "fs-extra": "^11.3.0",
+    "handlebars": "^4.7.8",
+    "joi": "^17.13.3",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
