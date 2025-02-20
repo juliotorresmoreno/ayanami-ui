@@ -4,6 +4,7 @@ import { useState } from "react";
 import { contactSchema } from "@/validation/contactValidation";
 
 export default function Contact() {
+  const apiURL = process.env.NEXT_PUBLIC_API_URL;
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -45,7 +46,7 @@ export default function Contact() {
     try {
       setStatus({ success: false, message: "Sending message..." });
 
-      const response = await fetch("/api/send-email", {
+      const response = await fetch(`${apiURL}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,6 +59,7 @@ export default function Contact() {
       if (result.success) {
         setStatus({ success: true, message: result.message });
         setFormData({ name: "", email: "", message: "" });
+        setShowForm(false);
       } else {
         setStatus({ success: false, message: result.message });
       }

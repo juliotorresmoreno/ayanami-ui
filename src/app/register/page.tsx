@@ -1,21 +1,69 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { register } from "@/services/auth";
+import { registerSchema } from "@/validation/registerValidation";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [subscribeNewsletter, setSubscribeNewsletter] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+    const payload = {
+      name,
+      email,
+      password,
+      confirmPassword,
+      acceptTerms,
+      subscribeNewsletter,
+    };
+
+    const errors = registerSchema.validate(payload, { abortEarly: false }).error?.details;
+    if (errors) {
+      const errorMessage = errors.map((error) => error.message).join(" ");
+      setError(errorMessage);
+      return;
+    }
+
+    try {
+      await register({ name, email, password, role: "USER", active: true });
+
+      setSuccess(true);
+      setError(null);
+    } catch (err: unknown) {
+      const error = err as Error;
+      setError(error.message || "An error occurred during registration.");
+      setSuccess(false);
+    }
+  };
 
   return (
     <>
       <Header />
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center mt-16 justify-center bg-gray-50">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
-          <form className="space-y-6">
-            {/* Name Input */}
+          {error && <div className="text-red-500 mb-4">{error}</div>}
+          {success && (
+            <div className="text-green-500 mb-4">
+              Registration successful! Please check your email to verify your account.
+            </div>
+          )}
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name" className="block text-lg text-gray-700 mb-2">
                 Name
@@ -23,12 +71,13 @@ export default function Register() {
               <input
                 type="text"
                 id="name"
+                name="name"
                 placeholder="Your Name"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
               />
             </div>
 
-            {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-lg text-gray-700 mb-2">
                 Email
@@ -36,12 +85,13 @@ export default function Register() {
               <input
                 type="email"
                 id="email"
+                name="email"
                 placeholder="your.email@example.com"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
               />
             </div>
 
-            {/* Password Input */}
             <div>
               <label htmlFor="password" className="block text-lg text-gray-700 mb-2">
                 Password
@@ -50,8 +100,10 @@ export default function Register() {
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
+                  name="password"
                   placeholder="Your Password"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  required
                 />
                 <button
                   type="button"
@@ -99,7 +151,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Confirm Password Input */}
             <div>
               <label htmlFor="confirmPassword" className="block text-lg text-gray-700 mb-2">
                 Confirm Password
@@ -108,8 +159,10 @@ export default function Register() {
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   id="confirmPassword"
+                  name="confirmPassword"
                   placeholder="Repeat Your Password"
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  required
                 />
                 <button
                   type="button"
@@ -157,10 +210,40 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Submit Button */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="acceptTerms"
+                checked={acceptTerms}
+                onChange={(e) => setAcceptTerms(e.target.checked)}
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                required
+              />
+              <label htmlFor="acceptTerms" className="ml-2 text-sm text-gray-600">
+                I agree to the{" "}
+                <Link href="/terms" className="text-blue-600 hover:underline">
+                  Terms and Conditions
+                </Link>
+              </label>
+            </div>
+
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="subscribeNewsletter"
+                checked={subscribeNewsletter}
+                onChange={(e) => setSubscribeNewsletter(e.target.checked)}
+                className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label htmlFor="subscribeNewsletter" className="ml-2 text-sm text-gray-600">
+                Subscribe to our newsletter
+              </label>
+            </div>
+
             <button
               type="submit"
-              className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300"
+              disabled={!acceptTerms}
+              className="w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               Register
             </button>
