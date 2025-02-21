@@ -4,14 +4,12 @@ export default function Header() {
   return (
     <header className="w-full bg-white shadow-sm fixed top-0 left-0 z-50 backdrop-blur-sm bg-opacity-90">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
         <h1 className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors duration-300">
           <Link href="/">
             Petra AI
           </Link>
         </h1>
 
-        {/* Navigation Links */}
         <nav className="hidden md:flex items-center space-x-8">
           <Link
             href="/#about"
@@ -42,7 +40,6 @@ export default function Header() {
             <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
           </Link>
 
-          {/* Login and Register Links */}
           <div className="flex items-center space-x-4">
             <Link
               href="/login"

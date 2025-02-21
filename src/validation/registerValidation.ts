@@ -6,6 +6,11 @@ export const registerSchema = Joi.object({
     "string.min": "Name should have at least 3 characters",
     "string.max": "Name should have at most 50 characters",
   }),
+  username: Joi.string().min(3).max(30).required().messages({
+    "string.empty": "Username is required",
+    "string.min": "Username should have at least 3 characters",
+    "string.max": "Username should have at most 30 characters",
+  }),
   email: Joi.string().email({ tlds: { allow: false } }).required().messages({
     "string.empty": "Email is required",
     "string.email": "Email must be a valid email address",
@@ -32,5 +37,7 @@ export const registerSchema = Joi.object({
   acceptTerms: Joi.boolean().valid(true).required().messages({
     "any.only": "You must accept the terms and conditions",
   }),
-  subscribeNewsletter: Joi.boolean().optional(),
+  acceptDataPolicy: Joi.boolean().valid(true).required().messages({
+    "any.only": "You must accept the data policy",
+  }),
 });
