@@ -1,39 +1,45 @@
 const steps = [
   {
+    id: "data-ingestion",
     title: "Data Ingestion",
     description:
       "Petra ingests data from various sources, including databases, APIs, and streaming platforms, ensuring seamless integration.",
-    icon: "📥", 
+    icon: "📥",
   },
   {
+    id: "vectorization",
     title: "Vectorization",
     description:
       "Using advanced algorithms, Petra converts raw data into high-dimensional vectors, capturing essential features and relationships.",
-    icon: "🧬", 
+    icon: "🧬",
   },
   {
+    id: "indexing-faiss",
     title: "Indexing with FAISS",
     description:
       "Petra leverages FAISS to create efficient indexes for fast similarity search, enabling quick retrieval of relevant data.",
-    icon: "🔍", 
+    icon: "🔍",
   },
   {
+    id: "query-processing",
     title: "Query Processing",
     description:
       "When a query is made, Petra processes it in real-time, using vector-based search to find the most relevant results.",
-    icon: "⚡", 
+    icon: "⚡",
   },
   {
+    id: "ai-insights",
     title: "AI-Powered Insights",
     description:
       "Petra applies machine learning models to analyze data and provide actionable insights, such as patterns, trends, and anomalies.",
-    icon: "🤖", 
+    icon: "🤖",
   },
   {
+    id: "scalable-infrastructure",
     title: "Scalable Infrastructure",
     description:
       "Built on a scalable and secure infrastructure, Petra ensures high performance and reliability for enterprise needs.",
-    icon: "🚀", 
+    icon: "🚀",
   },
 ];
 
@@ -46,9 +52,9 @@ export default function HowItWorks() {
         </h2>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3 animate-fade-in-up animation-delay-200">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div
-              key={index}
+              key={step.id}
               className="p-8 bg-gray-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2"
             >
               <div className="text-5xl text-blue-600 mb-6">{step.icon}</div>

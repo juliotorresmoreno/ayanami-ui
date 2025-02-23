@@ -1,16 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import Header from "./Header";
 import Footer from "./Footer";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { useEffect } from "react";
 import AppSidebar from "./AppSidebar";
 
-interface DashboardLayoutProps {
+type DashboardLayoutProps = Readonly<{
   children: React.ReactNode;
   SideBar?: React.ReactNode;
   title?: string;
-}
+}>;
 
 export default function DashboardLayout({ children, SideBar, title }: DashboardLayoutProps) {
 

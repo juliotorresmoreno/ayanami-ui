@@ -22,26 +22,26 @@ const profileItems: Array<{
   url: ProfileUrls;
   icon: React.ElementType;
 }> = [
-  {
-    title: "Basic Information",
-    url: "basic-info",
-    icon: User,
-  },
-  {
-    title: "Security",
-    url: "security",
-    icon: Lock,
-  },
-  {
-    title: "Forget Data",
-    url: "forget-data",
-    icon: Trash,
-  },
-];
+    {
+      title: "Basic Information",
+      url: "basic-info",
+      icon: User,
+    },
+    {
+      title: "Security",
+      url: "security",
+      icon: Lock,
+    },
+    {
+      title: "Forget Data",
+      url: "forget-data",
+      icon: Trash,
+    },
+  ];
 
 interface ProfileSidebarProps {
-  activeSection: string;
-  setActiveSection: (section: ProfileUrls) => void;
+  readonly activeSection: string;
+  readonly setActiveSection: (section: ProfileUrls) => void;
 }
 
 const stylePointer = {

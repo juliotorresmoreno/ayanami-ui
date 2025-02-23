@@ -5,9 +5,9 @@ import DashboardLayout from "../Dashboard/DashboardLayout";
 import ProfileSidebar from "./ProfileSidebar";
 
 interface ProfileLayoutProps {
-  children: React.ReactNode;
-  activeSection: string;
-  setActiveSection: (section: ProfileUrls) => void;
+  readonly children: React.ReactNode;
+  readonly activeSection: string;
+  readonly setActiveSection: (section: ProfileUrls) => void;
 }
 
 export default function ProfileLayout({ children, activeSection, setActiveSection }: ProfileLayoutProps) {

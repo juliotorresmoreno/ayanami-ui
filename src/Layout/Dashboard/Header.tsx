@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { FaUser } from "react-icons/fa";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-type HeaderProps = {
+type HeaderProps = Readonly<{
   title?: string;
-};
+}>;
 
 export default function Header({ title }: HeaderProps) {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);

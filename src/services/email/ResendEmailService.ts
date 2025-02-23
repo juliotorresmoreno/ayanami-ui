@@ -2,8 +2,8 @@ import { Service, EmailTemplate } from "./service";
 import { TemplateEngine } from "@/utils/TemplateEngine";
 
 export class ResendEmailService extends Service {
-  private apiKey: string;
-  private senderEmail: string;
+  private readonly apiKey: string;
+  private readonly senderEmail: string;
 
   constructor(apiKey: string, senderEmail: string) {
     super();

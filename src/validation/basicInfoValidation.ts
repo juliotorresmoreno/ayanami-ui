@@ -12,7 +12,7 @@ export const basicInfoSchema = Joi.object({
     "string.email": "Email must be a valid email address",
   }),
   phone: Joi.string()
-    .pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)
+    .pattern(/^[+]*[(]?\d{1,4}[)]?[-\s./\d]*$/)
     .min(10)
     .max(15)
     .required()
