@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     site: "@PetraAI",
     title: "Petra AI - Transforming Data into Knowledge",
     description: "AI-driven solutions using vector databases for optimized search and analysis.",
-    images: ["/public/twitter-image.png"], // Replace with actual Twitter image
+    images: ["/public/twitter-image.png"],
   },
 };
 

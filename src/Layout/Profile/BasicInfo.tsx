@@ -8,17 +8,15 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { basicInfoSchema } from "@/validation/basicInfoValidation";
+import { withBasicInfo } from "@/hoc/withBasicInfo";
 
-export default function BasicInfo() {
-  const [formData, setFormData] = useState({
-    fullName: "John Doe",
-    email: "john.doe@example.com",
-    phone: "+1 234 567 890",
-    bio: "I'm a software developer passionate about building great products.",
-    location: "New York, USA",
-    website: "https://johndoe.com",
-    birthDate: "1990-01-01",
-    gender: "male",
+interface BasicInfoProps {
+  readonly profile: User;
+}
+
+function BasicInfo({ profile }: BasicInfoProps) {
+  const [formData, setFormData] = useState<Omit<User, "id">>({
+    ...profile,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -62,15 +60,15 @@ export default function BasicInfo() {
       </h2>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4">
         <div>
-          <Label htmlFor="fullName">Full Name</Label>
+          <Label htmlFor="name">Name</Label>
           <Input
-            id="fullName"
-            name="fullName"
-            value={formData.fullName}
+            id="name"
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             className="mt-1"
           />
-          {errors.fullName && <p className="text-sm text-red-500 mt-1">{errors.fullName}</p>}
+          {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
         </div>
 
         <div>
@@ -157,10 +155,10 @@ export default function BasicInfo() {
               <SelectValue placeholder="Select gender" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="male">Male</SelectItem>
-              <SelectItem value="female">Female</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-              <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+              <SelectItem value="MALE">Male</SelectItem>
+              <SelectItem value="FEMALE">Female</SelectItem>
+              <SelectItem value="OTHER">Other</SelectItem>
+              <SelectItem value="PREFER_NOT_TO_SAY">Prefer not to say</SelectItem>
             </SelectContent>
           </Select>
           {errors.gender && <p className="text-sm text-red-500 mt-1">{errors.gender}</p>}
@@ -177,3 +175,5 @@ export default function BasicInfo() {
     </section>
   );
 }
+
+export default withBasicInfo(BasicInfo);

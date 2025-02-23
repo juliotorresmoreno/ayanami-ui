@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "./AppSidebar";
 import Header from "./Header";
 import Footer from "./Footer";
-import AppSidebar from "./AppSidebar";
 
 type DashboardLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -13,7 +13,6 @@ type DashboardLayoutProps = Readonly<{
 }>;
 
 export default function DashboardLayout({ children, SideBar, title }: DashboardLayoutProps) {
-
   useEffect(() => {
     document.body.classList.add("flex");
     document.body.classList.add("flex-1");
@@ -39,7 +38,6 @@ export default function DashboardLayout({ children, SideBar, title }: DashboardL
             <Footer />
           </div>
         </div>
-
       </div>
     </SidebarProvider>
   );

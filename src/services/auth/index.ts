@@ -1,3 +1,4 @@
+import { defaultFetchOptions } from "@/config";
 
 
 interface RegisterArgs {
@@ -19,6 +20,7 @@ export async function register(data: RegisterArgs) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+      ...defaultFetchOptions
     });
 
     if (!response.ok) {
@@ -47,6 +49,7 @@ export const login = async (credentials: LoginArgs) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(credentials),
+      ...defaultFetchOptions
     });
 
     if (!response.ok) {
@@ -71,6 +74,7 @@ export const forgotPassword = async (email: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email }),
+      ...defaultFetchOptions
     });
 
     if (!response.ok) {
