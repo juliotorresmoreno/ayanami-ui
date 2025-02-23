@@ -41,7 +41,6 @@ export default function BasicInfo() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validar el formulario
     const { error } = basicInfoSchema.validate(formData, { abortEarly: false });
 
     if (error) {
@@ -62,7 +61,6 @@ export default function BasicInfo() {
         Basic Information
       </h2>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4">
-        {/* Full Name */}
         <div>
           <Label htmlFor="fullName">Full Name</Label>
           <Input
@@ -75,7 +73,6 @@ export default function BasicInfo() {
           {errors.fullName && <p className="text-sm text-red-500 mt-1">{errors.fullName}</p>}
         </div>
 
-        {/* Email */}
         <div>
           <Label htmlFor="email">Email</Label>
           <Input
@@ -89,7 +86,6 @@ export default function BasicInfo() {
           {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
         </div>
 
-        {/* Phone */}
         <div>
           <Label htmlFor="phone">Phone</Label>
           <Input
@@ -103,7 +99,6 @@ export default function BasicInfo() {
           {errors.phone && <p className="text-sm text-red-500 mt-1">{errors.phone}</p>}
         </div>
 
-        {/* Bio */}
         <div>
           <Label htmlFor="bio">Bio</Label>
           <Textarea
@@ -117,7 +112,6 @@ export default function BasicInfo() {
           {errors.bio && <p className="text-sm text-red-500 mt-1">{errors.bio}</p>}
         </div>
 
-        {/* Location */}
         <div>
           <Label htmlFor="location">Location</Label>
           <Input
@@ -130,7 +124,6 @@ export default function BasicInfo() {
           {errors.location && <p className="text-sm text-red-500 mt-1">{errors.location}</p>}
         </div>
 
-        {/* Website */}
         <div>
           <Label htmlFor="website">Website</Label>
           <Input
@@ -144,7 +137,6 @@ export default function BasicInfo() {
           {errors.website && <p className="text-sm text-red-500 mt-1">{errors.website}</p>}
         </div>
 
-        {/* Birth Date */}
         <div>
           <Label htmlFor="birthDate">Birth Date</Label>
           <Input
@@ -158,7 +150,6 @@ export default function BasicInfo() {
           {errors.birthDate && <p className="text-sm text-red-500 mt-1">{errors.birthDate}</p>}
         </div>
 
-        {/* Gender */}
         <div>
           <Label htmlFor="gender">Gender</Label>
           <Select onValueChange={handleSelectChange} value={formData.gender}>
@@ -175,7 +166,6 @@ export default function BasicInfo() {
           {errors.gender && <p className="text-sm text-red-500 mt-1">{errors.gender}</p>}
         </div>
 
-        {/* Save Changes Button */}
         <Button
           type="submit"
           variant="outline"

@@ -63,7 +63,6 @@ export default function Register() {
 
       <main>
         <Header />
-        {/* Ajusta el margen superior (mt-20) según la altura del Header */}
         <div className="min-h-screen flex items-center mt-16 justify-center bg-gray-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md m-10">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
