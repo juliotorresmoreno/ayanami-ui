@@ -16,42 +16,38 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { usePathname } from "next/navigation";
 
-const profileItems: Array<{
+interface ProfileItems {
   title: string;
-  url: ProfileUrls;
+  url: string;
   icon: React.ElementType;
-}> = [
-    {
-      title: "Basic Information",
-      url: "basic-info",
-      icon: User,
-    },
-    {
-      title: "Security",
-      url: "security",
-      icon: Lock,
-    },
-    {
-      title: "Forget Data",
-      url: "forget-data",
-      icon: Trash,
-    },
-  ];
-
-interface ProfileSidebarProps {
-  readonly activeSection: string;
-  readonly setActiveSection: (section: ProfileUrls) => void;
+  hide?: boolean;
 }
 
-const stylePointer = {
-  cursor: 'pointer'
-}
+const profileItems: ProfileItems[] = [
+  {
+    title: "Basic Information",
+    url: "/dashboard/profile",
+    icon: User,
+  },
+  {
+    title: "Security",
+    url: "/dashboard/profile/security",
+    icon: Lock,
+  },
+  {
+    title: "Forget Data",
+    url: "/dashboard/profile/forget-data",
+    icon: Trash,
+    hide: true,
+  },
+];
 
-export default function ProfileSidebar({
-  activeSection,
-  setActiveSection,
-}: ProfileSidebarProps) {
+
+export default function ProfileSidebar() {
+  const location = usePathname();
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -59,20 +55,19 @@ export default function ProfileSidebar({
           <SidebarGroupLabel>Profile</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {profileItems.map((item) => (
+              {profileItems.filter(item => !item.hide).map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
-                    onClick={() => setActiveSection(item.url)}
-                    className={`${activeSection === item.url
+                    className={`${location === item.url
                       ? "bg-blue-50 text-blue-600"
                       : "text-gray-600 hover:bg-gray-50"
                       }`}
                   >
-                    <div style={stylePointer} className="flex items-center space-x-3">
+                    <a href={item.url} className="flex items-center space-x-3">
                       <item.icon className="w-5 h-5" />
                       <span>{item.title}</span>
-                    </div>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

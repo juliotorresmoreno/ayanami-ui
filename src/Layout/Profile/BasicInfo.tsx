@@ -1,4 +1,3 @@
-// Layout/Profile/BasicInfo.tsx
 "use client";
 
 import { useState } from "react";
@@ -8,17 +7,25 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { basicInfoSchema } from "@/validation/basicInfoValidation";
-import { withBasicInfo } from "@/hoc/withBasicInfo";
+import { withProfile } from "@/hoc/withProfile";
 
 interface BasicInfoProps {
   readonly profile: User;
 }
 
 function BasicInfo({ profile }: BasicInfoProps) {
-  const [formData, setFormData] = useState<Omit<User, "id">>({
-    ...profile,
-  });
+  const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
+  const [formData, setFormData] = useState<Omit<User, "id">>({
+    name: profile.name ?? "",
+    email: profile.email ?? "",
+    phone: profile.phone ?? "",
+    bio: profile.bio ?? "",
+    location: profile.location ?? "",
+    website: profile.website ?? "",
+    birthDate: profile.birthDate ?? "",
+    gender: profile.gender ?? "MALE",
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -36,7 +43,26 @@ function BasicInfo({ profile }: BasicInfoProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const updateProfile = async (data: Omit<User, "id">) => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${apiURL}/profile`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update profile");
+    }
+
+    return response.json();
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { error } = basicInfoSchema.validate(formData, { abortEarly: false });
@@ -47,9 +73,16 @@ function BasicInfo({ profile }: BasicInfoProps) {
         validationErrors[detail.path[0]] = detail.message;
       });
       setErrors(validationErrors);
-    } else {
-      setErrors({});
-      console.log("Datos guardados:", formData);
+      return;
+    }
+
+    setErrors({});
+
+    try {
+      await updateProfile(formData);
+      console.log("Profile updated successfully");
+    } catch (error) {
+      console.error("Error updating profile:", error);
     }
   };
 
@@ -176,4 +209,4 @@ function BasicInfo({ profile }: BasicInfoProps) {
   );
 }
 
-export default withBasicInfo(BasicInfo);
+export default withProfile(BasicInfo);

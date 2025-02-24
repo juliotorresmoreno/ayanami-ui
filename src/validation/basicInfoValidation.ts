@@ -2,7 +2,7 @@
 import Joi from "joi";
 
 export const basicInfoSchema = Joi.object({
-  fullName: Joi.string().min(3).max(50).required().messages({
+  name: Joi.string().min(3).max(50).required().messages({
     "string.empty": "Full Name is required",
     "string.min": "Full Name should have at least 3 characters",
     "string.max": "Full Name should have at most 50 characters",
@@ -46,7 +46,7 @@ export const basicInfoSchema = Joi.object({
       "any.required": "Birth Date is required",
     }),
   gender: Joi.string()
-    .valid("male", "female", "other", "prefer-not-to-say")
+    .valid("MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY")
     .required()
     .messages({
       "any.only": "Gender must be one of: male, female, other, prefer-not-to-say",

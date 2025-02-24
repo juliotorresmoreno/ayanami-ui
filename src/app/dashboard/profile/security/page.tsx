@@ -2,12 +2,12 @@
 "use client";
 
 import ProfileLayout from "@/Layout/Profile/ProfileLayout";
-import BasicInfo from "@/Layout/Profile/BasicInfo";
+import Security from "@/Layout/Profile/Security";
 
-export default function ProfilePage() {
+export default function Page() {
   return (
     <ProfileLayout>
-      <BasicInfo />
+      <Security />
     </ProfileLayout>
   );
 }

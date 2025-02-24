@@ -6,18 +6,13 @@ import ProfileSidebar from "./ProfileSidebar";
 
 interface ProfileLayoutProps {
   readonly children: React.ReactNode;
-  readonly activeSection: string;
-  readonly setActiveSection: (section: ProfileUrls) => void;
 }
 
-export default function ProfileLayout({ children, activeSection, setActiveSection }: ProfileLayoutProps) {
+export default function ProfileLayout({ children }: ProfileLayoutProps) {
   return (
     <DashboardLayout
       SideBar={
-        <ProfileSidebar
-          activeSection={activeSection}
-          setActiveSection={setActiveSection}
-        />
+        <ProfileSidebar />
       }
     >
       <div className="w-full max-w-4xl mx-auto p-6">
