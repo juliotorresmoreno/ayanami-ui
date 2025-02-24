@@ -9,15 +9,13 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { changePasswordSchema } from "@/validation/changePasswordValidation";
 import { Eye, EyeOff } from "lucide-react";
 import { Toaster, toast } from "sonner";
+import { withLoginAttempts } from "@/hoc/withLoginAttempts";
 
-interface LoginAttempt {
-  id: string;
-  timestamp: string;
-  ipAddress: string;
-  location: string;
+interface SecurityProps {
+  readonly attempts: LoginAttempt[];
 }
 
-function Security() {
+function Security({ attempts }: SecurityProps) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,21 +23,6 @@ function Security() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const loginAttempts: LoginAttempt[] = [
-    {
-      id: "1",
-      timestamp: "2023-10-05 12:34:56",
-      ipAddress: "192.168.1.1",
-      location: "New York, USA",
-    },
-    {
-      id: "2",
-      timestamp: "2023-10-04 09:12:34",
-      ipAddress: "192.168.1.2",
-      location: "Los Angeles, USA",
-    },
-  ];
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -204,11 +187,11 @@ function Security() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {loginAttempts.map((attempt) => (
+              {attempts.map((attempt) => (
                 <TableRow key={attempt.id}>
                   <TableCell>{attempt.timestamp}</TableCell>
                   <TableCell>{attempt.ipAddress}</TableCell>
-                  <TableCell>{attempt.location}</TableCell>
+                  <TableCell>{attempt.success}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -221,4 +204,4 @@ function Security() {
   );
 }
 
-export default Security;
+export default withLoginAttempts(Security);

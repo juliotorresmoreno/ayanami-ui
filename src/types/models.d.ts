@@ -12,6 +12,14 @@ type User = {
   gender: string;
 }
 
+type LoginAttempt = {
+  id: number;
+  userId: number;
+  timestamp: string;
+  ipAddress: string;
+  success: boolean;
+}
+
 type ProfileUrls = 'basic-info' | 'security' | 'forget-data';
 
 type Gender = 'MALE' | 'FEMALE' | 'OTHER' | 'PREFER_NOT_TO_SAY';
